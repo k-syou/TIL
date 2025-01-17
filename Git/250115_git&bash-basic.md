@@ -5,6 +5,11 @@
 - `git init`: 새로운 Git 저장소 초기화
 - `git status`: 작업 디렉토리 상태 표시
 - `git commit -m "message"`: 메시지와 함께 변경 사항 커밋
+- `git log --oneline --graph --decorate --all`: 모든 로그 확인
+    - `--oneline`: 각 커밋을 한 줄로 표시합니다.
+    - `--graph`: 커밋 간의 관계를 그래프로 표시합니다.
+    - `--decorate`: 브랜치, 태그 등의 레퍼런스를 함께 표시합니다.
+    - `--all`: 모든 브랜치의 커밋을 표시합니다.
 
 ## Bash 명령어
 
