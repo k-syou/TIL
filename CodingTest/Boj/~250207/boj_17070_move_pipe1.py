@@ -1,7 +1,7 @@
 import sys
 from collections import deque
 
-sys.setrecursionlimit(10 ** 7)
+sys.setrecursionlimit(10**7)
 
 N = int(input())
 
@@ -66,7 +66,7 @@ def dfs(n, y, x, direction):
 dfs(N, 0, 1, 1)
 print(result)
 
-'''
+"""
 16
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
@@ -84,4 +84,4 @@ print(result)
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-'''
+"""

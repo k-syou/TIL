@@ -10,6 +10,7 @@ def merge_sort(arr):
     # 2️ 정렬된 배열 병합
     return merge(left_half, right_half)
 
+
 def merge(left, right):
     result = []
     i = j = 0  # 두 개의 배열을 비교할 포인터
@@ -25,11 +26,12 @@ def merge(left, right):
     # 남은 요소 추가
     result.extend(left[i:])
     result.extend(right[j:])
-    
+
     return result
 
+
 # 예제 실행
-if __name__ == '__main__':
+if __name__ == "__main__":
     arr = [5, 2, 9, 1, 7, 6, 8, 3]
     sorted_arr = merge_sort(arr)
     print("정렬 후:", sorted_arr)
