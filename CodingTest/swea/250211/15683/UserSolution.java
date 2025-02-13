@@ -2,13 +2,13 @@
 import java.util.HashMap;
 import java.util.Map;
 
-
 class UserSolution {
 
     class Area {
         private int soldierCount;
         private char[] kingName;
         public int index;
+
         public Area(int s_count, char[] k_name, int i) {
             soldierCount = s_count;
             kingName = k_name;
@@ -71,7 +71,7 @@ class UserSolution {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 area[i][j] = new Area(mSoldier[i][j], mMonarch[i][j], i * N + j);
-                int[] loc = {i, j};
+                int[] loc = { i, j };
                 mapping.put(area[i][j].getKingName(), loc);
                 int index = area[i][j].index;
                 parent[index] = index;

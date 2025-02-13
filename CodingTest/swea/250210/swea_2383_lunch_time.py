@@ -2,7 +2,7 @@ T = int(input())
 
 
 def get_distance(people, stairway):
-    # 거리 계산산
+    # 거리 계산
     return abs(people[0] - stairway[0]) + abs(people[1] - stairway[1])
 
 
