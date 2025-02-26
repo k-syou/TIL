@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .profile-box {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 300px;
+            border-color: black;
+            border-width: 1;
+            border-style: solid;
+            padding: 0 20px 30px;
+        }
+
+        .profile-box .profile-img-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .profile-box .profile-img-box img {
+            width: inherit;
+        }
+
+        .profile-box .profile-img-box p {
+            display: block;
+            width: inherit;
+            position: absolute;
+            line-height: 60px;
+            bottom: 4px;
+            text-align: center;
+            background-color: orange;
+            opacity: .6;
+            margin: 0;
+            height: 60px;
+            font-size: 30px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-box">
+        <div class="profile-img-box">
+            <img src="profile.jpg" alt="Profile Image">
+            <p>Name</p>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci unde officiis ad nostrum. Laboriosam
+            mollitia similique provident fuga tenetur saepe sit, amet eaque neque eius quaerat expedita ea illum veniam.
+        </p>
+    </div>
+</body>
+
+</html>

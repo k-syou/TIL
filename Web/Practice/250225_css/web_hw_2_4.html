@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {}
+
+        div p {
+            color: blue;
+            font-size: 30px;
+        }
+
+        div>p {
+            color: crimson;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        자식 결합자의 경우 부모 결합자 바로 아래 있는 요소만 적용하며,
+        자손 결합자의 경우 부모 결합자 아래쪽에 있는 모든 요소에 적용한다.
+
+        우선순위는 자식 결합자가 더 높으므로 동시에 사용한 경우에,
+        부모 요소의 바로 아래 요소는 자손결합자의 css가 먼저 적용되고
+        그 후에 자식결합자로 연결된 css가 적용된다.
+
+        <div>
+            <p>child</p>
+        </div>
+
+        child 글자는 div p { ... } 에 있는 스타일을 적용한 후
+        div>p { ... } 에 있는 스타일을 덮어 쓴다.
+    -->
+    <div>
+        <p>자식</p>
+        <span>
+            <p>&emsp;&emsp;&emsp;손자</p>
+        </span>
+        <p>자식</p>
+    </div>
+</body>
+
+</html>

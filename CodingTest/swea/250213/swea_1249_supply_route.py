@@ -12,8 +12,8 @@ def dijkstra(N, grid, sy, sx, ey, ex):
     heapq.heappush(hq, (0, sy, sx))
 
     # visited = 가장 짧은 방문 기록
-    visited = [[float("inf")] * N for _ in range(N)]
-    visited[sy][sx] = 0
+    visited = [[0] * N for _ in range(N)]
+    visited[sy][sx] = 1
 
     while hq:
         td, ty, tx = heapq.heappop(hq)
@@ -28,10 +28,10 @@ def dijkstra(N, grid, sy, sx, ey, ex):
             # nd = 다음 위치까지의 복구 시간
             # grid[ny][nx] 가 도로의 깊이 이므로 도로의 깊이만큼 시간이 누적됨
             nd = td + grid[ny][nx]
-            if visited[ny][nx] <= nd:
+            if visited[ny][nx]:
                 # 다음 위치까지의 시간이 이미 방문한 기록보다 긴 경우 스킵
                 continue
-            visited[ny][nx] = nd
+            visited[ny][nx] = 1
             heapq.heappush(hq, (nd, ny, nx))
 
 

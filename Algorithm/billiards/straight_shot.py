@@ -1,10 +1,60 @@
 from billiards_assets import *
 
-def straight_shot(cue_ball:Ball, target_ball:Ball, hole, other_balls):
-    cx, cy = cue_ball.get_loc() # 흰공 위치
-    tx, ty = target_ball.get_loc() # 타겟공 위치
 
-    hx, hy = hole # 홀 위치
+def straight_shot2(cue_ball: Ball, target_ball: Ball, hole):
+
+    def d(sx, sy, tx, ty):
+        a = sx - tx
+        b = sy - ty
+        c = math.sqrt(a**2 + b**2)
+        return c
+
+    def find_target_position(tx, ty, hx, hy):
+        D = d(tx, ty, hx, hy)
+        nD = 5.73 / D
+        nx = tx - nD * (hx - tx)
+        ny = ty - nD * (hy - ty)
+        return nx, ny
+
+    def dist_from_target(x2, y2, x1, y1):
+        R = cue_ball.r
+        if x2 == -1 and y2 == -1:
+            return -1, -1, -1
+
+        a, b = x2 - x1, y2 - y1
+        dist = math.sqrt(a**2 + b**2)
+
+        dx, dy = a / dist, b / dist
+        gx, gy = x2 + 2 * R * dx, y2 + 2 * R * dy
+
+        return gx, gy, dist
+
+    wx, wy = cue_ball.get_loc()
+    tx, ty = target_ball.get_loc()
+
+    hx, hy = hole
+    nx, ny, dist = dist_from_target(tx, ty, hx, hy)
+    print("w 좌표:", wy, wx)
+    print("n 좌표:", ny, nx)
+    x = nx - wx
+    y = ny - wy
+    radian = math.atan2(x, y)
+    angle = 180 / math.pi * radian
+
+    radian = math.atan2(hx - tx, hy - ty)
+    target_angle = 180 / math.pi * radian
+
+    w_n = d(wx, wy, nx, ny)
+    t_h = d(tx, ty, hx, hy)
+
+    return angle, target_angle, w_n + t_h, (ny, nx)
+
+
+def straight_shot(cue_ball: Ball, target_ball: Ball, hole, other_balls):
+    cx, cy = cue_ball.get_loc()  # 흰공 위치
+    tx, ty = target_ball.get_loc()  # 타겟공 위치
+
+    hx, hy = hole  # 홀 위치
     # 현재 공을 기준으로 타겟과 홀이
     # 같은 사분면에 있는지 확인후
     # 모든 사분면의 좌표를 1사분면에 위치하도록 변경
@@ -103,7 +153,7 @@ def straight_shot(cue_ball:Ball, target_ball:Ball, hole, other_balls):
     else:
         # 위쪽에 있는 경우
         cue_angle = X - D
-    
+
     # 흰공의 충돌지점 좌표 변경
     gx, gy = get_goal_loc(e, cue_angle, cue_ball)
     if ct_quadrant == 2:
@@ -114,10 +164,10 @@ def straight_shot(cue_ball:Ball, target_ball:Ball, hole, other_balls):
     elif ct_quadrant == 4:
         gx -= (gx - cx) * 2
 
-    if ct_quadrant % 2: # 1, 3 사분면
+    if ct_quadrant % 2:  # 1, 3 사분면
         cue_angle += (ct_quadrant - 1) * 90
         ball_angle += (ct_quadrant - 1) * 90
-    else: # 2, 4 사분면
+    else:  # 2, 4 사분면
         cue_angle = ct_quadrant * 90 - cue_angle
         ball_angle = ct_quadrant * 90 - ball_angle
 

@@ -1,9 +1,36 @@
-import math 
 from collections import *
+import math
+
+# 닉네임을 사용자에 맞게 변경해 주세요.
+NICKNAME = "A0005_1346368"
+
+# 일타싸피 프로그램을 로컬에서 실행할 경우 변경하지 않습니다.
+HOST = "127.0.0.1"
+
+# 일타싸피 프로그램과 통신할 때 사용하는 코드값으로 변경하지 않습니다.
+PORT = 1447
+CODE_SEND = 9901
+CODE_REQUEST = 9902
+SIGNAL_ORDER = 9908
+SIGNAL_CLOSE = 9909
+BALL_RADIUS = 5.73 / 2
+
+
+# 게임 환경에 대한 상수입니다.
+TABLE_WIDTH = 254
+TABLE_HEIGHT = 127
+NUMBER_OF_BALLS = 6
+HOLES = [[0, 0], [127, 0], [254, 0], [0, 127], [127, 127], [254, 127]]
+for i in range(6):
+    for j in range(2):
+        if HOLES[i] in ([127, 0], [127, 127]):
+            continue
+        HOLES[i][j] = abs(HOLES[i][j] - BALL_RADIUS)
+
 
 class PoolTable:
     # 당구판 객체 생성
-    def __init__(self, width = 254.0, height = 127.0, R = 5.73):
+    def __init__(self, width=254.0, height=127.0, R=5.73):
         self.W = width
         self.H = height
         self.th = R / 2
@@ -12,21 +39,22 @@ class PoolTable:
         # 홀의 위치
         # 좌하, 우하, 좌상, 우상, 중하, 중상
         return (
-            (0, 0), 
-            (self.W, 0), 
+            (0, 0),
+            (self.W, 0),
             (0, self.H),
-            (self.W, self.H), 
-            (self.W / 2,0),
-            (self.W / 2, self.H), 
-            )
-    
+            (self.W, self.H),
+            (self.W / 2, 0),
+            (self.W / 2, self.H),
+        )
+
     def get_threshold(self):
         # 상 하 좌 우
         return self.H - self.th, self.th, self.th, self.W - self.th
+        # return self.H, 0, 0, self.W
 
     def get_reverse_hole(self, hole, d):
-        thresholds = self.get_threshold() # 상하좌우
-        thr = thresholds[d] # 임계값
+        thresholds = self.get_threshold()  # 상하좌우
+        thr = thresholds[d]  # 임계값
         dx, dy = hole
         x_diff = abs(dx - thr)
         y_diff = abs(dy - thr)
@@ -61,7 +89,7 @@ class PoolTable:
 
 class Ball:
     # 공 객체 생성
-    def __init__(self, num, x, y, R = 5.73):
+    def __init__(self, num, x, y, R=5.73):
         self.num = num  # 공의 번호
         # 공의 좌표
         self.x = x
@@ -73,10 +101,10 @@ class Ball:
     def get_loc(self):
         # 공 위치 리턴
         return self.x, self.y
-    
-    def get_reverse_ball(self, table:PoolTable, d:int):
-        thresholds = table.get_threshold() # 상하좌우
-        thr = thresholds[d] # 임계값
+
+    def get_reverse_ball(self, table: PoolTable, d: int):
+        thresholds = table.get_threshold()  # 상하좌우
+        thr = thresholds[d]  # 임계값
         dx, dy = self.get_loc()
         x_diff = abs(dx - thr)
         y_diff = abs(dy - thr)
@@ -95,30 +123,35 @@ class Ball:
         # 위치가 d 방향으로 뒤집힌 좌표를 가진 Ball 객체 생성
         return Ball(self.num, dx, dy)
 
-    
+
 def pythagoras(a, b):
     # 피타고라스 정리 / 90도와 마주보는 빗변의 길이
-    return (a ** 2 + b ** 2) ** .5
+    return (a**2 + b**2) ** 0.5
+
 
 def get_theta(a, b, c):
     # 변의 길이 a, b, c가 있을 때
     # 변 a와 마주보는 각도를 출력
-    cosA = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c)
+    cosA = (b**2 + c**2 - a**2) / (2 * b * c)
     radA = math.acos(cosA)
-    A = math.degrees(radA)
+    # A = math.degrees(radA)
+    A = 180 / math.pi * radA
     return A
+
 
 def get_length_of_line(A, b, c):
     # 각도 A와 붙어있는 선분 b, c의 길이가 주어질 때
     # 각도 A와 마주보는 선분 a의 길이를 출력
     radA = math.radians(A)
     cosA = math.cos(radA)
-    a = (b ** 2 + c ** 2 - 2 * b * c * cosA) ** .5
+    a = (b**2 + c**2 - 2 * b * c * cosA) ** 0.5
     return a
+
 
 def get_atan_angle(dx, dy):
     # 공과 공 or 공과 홀 사이의 각도
     return math.degrees(math.atan2(dy, dx))
+
 
 def get_quadrant(sx, sy, tx, ty):
     # 4분면 검사
@@ -135,10 +168,11 @@ def get_quadrant(sx, sy, tx, ty):
         # s의 위치보다 y좌표는 크고, x좌표는 작은 경우
         return 4
 
+
 def cal_dist(x1, y1, x2, y2, a, b, R):
     # 선분((x1, y1) -> (x2, y2)) 과 점(a, b) 사이의 거리
     # 신발끈 공식
-    area = abs((x1*y2 + x2*b + a*y1) - (x1*b + a*y2 + x2*y1))
+    area = abs((x1 * y2 + x2 * b + a * y1) - (x1 * b + a * y2 + x2 * y1))
     AB = pythagoras((x1 - x2), (y1 - y2))
     AC = pythagoras((x1 - a), (y1 - b))
     BC = pythagoras((x2 - a), (y2 - b))
@@ -147,7 +181,7 @@ def cal_dist(x1, y1, x2, y2, a, b, R):
     max_x = max(x1, x2) + R
     min_y = min(y1, y2) - R
     max_y = max(y1, y2) + R
-    
+
     if min_x <= a <= max_x and min_y <= b <= max_y:
         # 검사 범위안에 있는 경우, 선과 점사이의 거리 출력
         return dist
@@ -155,8 +189,9 @@ def cal_dist(x1, y1, x2, y2, a, b, R):
         # 아닌경우
         return min(AC, BC)
 
-def check_balls(start_ball, goal_loc, other_balls):
-    # start_ball 에서부터 goal_loc로 갈때, 
+
+def check_balls(start_ball: Ball, goal_loc, other_balls):
+    # start_ball 에서부터 goal_loc로 갈때,
     # 다른공(other_balls)이 있는 경우 확인
     R = start_ball.R
     sx, sy = start_ball.get_loc()
@@ -167,6 +202,7 @@ def check_balls(start_ball, goal_loc, other_balls):
             return False
     return True
 
+
 if __name__ == "__main__":
     table = PoolTable()
     b = Ball(1, 240, 115)
@@ -175,4 +211,3 @@ if __name__ == "__main__":
     # print(table.get_reverse_hole(hole, 0))
     print(table.get_reverse_hole((0, 0), 0))
     # print(rb.x, rb.y)
-
