@@ -18,8 +18,8 @@ def connected(y, x, d, cnt):
     line = connected(ny, nx, d, cnt + 1)
     if line:
         processor[y][x] = 1
-    else:
-        processor[y][x] = 0
+    # else:
+    #     processor[y][x] = 0
     return line
 
 
@@ -36,7 +36,7 @@ def unconnected(y, x, d):
 
 def backtrack(cores, C, i, lines, connect_count):
     # cores = 각 코어의 좌표, C = 코어의 개수, i = 검색할 코어의 번호
-    # lines : 총 전선 연결 길이, connect_count = 코어 연결 개수
+    # lines = 총 전선 연결 길이, connect_count = 코어 연결 개수
     global min_lines
     # 현재 코어의 연결 개수(connect_count)의 전선 연결 길이(lines)를
     # 이전에 할당된 값과 비교하여 최소값 입력
@@ -69,7 +69,7 @@ for tc in range(1, int(input()) + 1):
     for y in range(N):
         for x in range(N):
             if processor[y][x] == 1:
-                processor[y][x] = 3  # 코어의 위치(테스트할 때 보기위함)
+                processor[y][x] = 3  # 코어의 위치(디버깅 할 때 보기위함)
                 if 0 < y < N - 1 and 0 < x < N - 1:
                     # 벽에 붙어있지 않은 코어의 위치만 검색하면 되므로 범위를 지정하여 추가
                     cores.append((y, x))
