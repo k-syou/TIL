@@ -14,7 +14,7 @@ for tc in range(1, T + 1):
     print(f"#{tc} {dp[12]}")
 
 
-# DFS 풀이
+# 재귀 풀이
 # def cal(m, tot):
 #     global min_value
 #     if m > 12:
