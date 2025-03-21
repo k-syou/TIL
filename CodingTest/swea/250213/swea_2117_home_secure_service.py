@@ -47,9 +47,7 @@ def solustion(N, M, city):
             dp[i][j][0] = city[i][j]
 
     for k in range(N + 2):
-        start = (
-            k // 2 - 1 if k > 1 else 0
-        )  # k 범위가 커질 수록 반드시 확인 하지 않아도 되는 범위가 생김
+        start = k // 2 - 1 if k > 1 else 0  # k 범위가 커질 수록 반드시 확인 하지 않아도 되는 범위가 생김
         for y in range(start, N - start):
             for x in range(start, N - start):
                 # before: dp에 저장된 y,x 좌표의 0 ~ k-1 까지의 집의 수

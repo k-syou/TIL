@@ -99,7 +99,6 @@ def union(a, b):
         return True
     return False
 
-
 edges = sorted(temp_bridges)
 parent = [*range(num)]
 rank = [0] * num
