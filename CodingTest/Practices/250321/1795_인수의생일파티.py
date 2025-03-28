@@ -18,6 +18,7 @@ def dijkstra1(heap):
     
 
 def dijkstra2(heap):
+    global result
     while heap:
         d, cur = heapq.heappop(heap)
         if cur == X:
@@ -45,6 +46,3 @@ for tc in range(1, T):
         result = max(result, dijkstra2(heap))
     
     print(f"#{tc} {result}")
-
-
-    
