@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Acticle
+from .models import Article
 
 # Register your models here.
-admin.site.register(Acticle)
+admin.site.register(Article)
