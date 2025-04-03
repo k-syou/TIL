@@ -35,9 +35,11 @@ for _ in range(N):
     tot += a
 
 # 2. 마을 위치 순으로 정렬하기
-mid = (tot+1) // 2  
+# mid = tot // 2  # Fail
+
 # 합이 홀수인 경우 그냥 반으로 나누면 절반 이상이 아닐 수 있음
 # 그래서 tot // 2 가 아닌 (tot + 1) // 2 로 변경
+mid = (tot + 1) // 2  # Success
 villages.sort(key=lambda v: v[0])
 
 # 3. 앞쪽 마을부터 순회하며 인구수를 누적
