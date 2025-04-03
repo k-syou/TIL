@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Article
 from .forms import ArticleForm
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     articles = Article.objects.all()
@@ -18,7 +18,7 @@ def detail(request, pk):
     }
     return render(request, 'articles/detail.html', context)
 
-
+@login_required
 def create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)
@@ -32,13 +32,13 @@ def create(request):
     }
     return render(request, 'articles/create.html', context)
 
-
+@login_required
 def delete(request, pk):
     article = Article.objects.get(pk=pk)
     article.delete()
     return redirect('articles:index')
 
-
+@login_required
 def update(request, pk):
     article = Article.objects.get(pk=pk)
     if request.method == 'POST':
